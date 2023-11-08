@@ -37,6 +37,7 @@ export type UseHideAnimationConfig = {
   darkBrand?: ImageRequireSource;
 
   animate: () => void;
+  canStartHideAnimation?: boolean;
 
   statusBarTranslucent?: boolean;
   navigationBarTranslucent?: boolean;
@@ -67,6 +68,7 @@ export function useHideAnimation(config: UseHideAnimationConfig) {
     darkBrand: darkBrandSrc,
 
     animate,
+    canStartHideAnimation = true,
 
     statusBarTranslucent = false,
     navigationBarTranslucent = false,
@@ -115,7 +117,8 @@ export function useHideAnimation(config: UseHideAnimationConfig) {
       layoutReady.current &&
       logoReady.current &&
       brandReady.current &&
-      !animateHasBeenCalled.current
+      !animateHasBeenCalled.current &&
+      canStartHideAnimation
     ) {
       animateHasBeenCalled.current = true;
 
@@ -123,7 +126,13 @@ export function useHideAnimation(config: UseHideAnimationConfig) {
         .then(() => animateFn.current())
         .catch(() => {});
     }
-  }, []);
+  }, [canStartHideAnimation]);
+
+  useEffect(() => {
+    if (canStartHideAnimation) {
+      maybeRunAnimate();
+    }
+  }, [canStartHideAnimation, maybeRunAnimate]);
 
   return useMemo<UseHideAnimation>(() => {
     const containerStyle: ViewStyle = {

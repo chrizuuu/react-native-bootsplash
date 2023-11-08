@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/zoontek/react-native-bootsplash.git"
+    "url": "https://github.com/chrizuuu/react-native-bootsplash.git"
   },
   "keywords": [
     "react-native-bootsplash",
@@ -43,7 +43,7 @@
     "typecheck": "tsc --project ./ --noEmit",
     "build": "bob build",
     "format": "prettier '**/*' -u -w",
-    "prepack": "yarn lint && yarn typecheck && yarn build && node ../obfuscator"
+    "prepack": "yarn lint && yarn typecheck && yarn build"
   },
   "react-native-builder-bob": {
     "source": "src",
